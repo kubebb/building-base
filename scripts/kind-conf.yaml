@@ -1,0 +1,32 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraMounts:
+    - hostPath: /tmp/images/
+      containerPath: /tmp/images/
+  - role: worker
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+    - containerPort: 80
+      hostPort: 80
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      protocol: TCP
+    extraMounts:
+    - hostPath: /tmp/images/
+      containerPath: /tmp/images/
+  - role: worker
+    extraMounts:
+    - hostPath: /tmp/images/
+      containerPath: /tmp/images/
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.grpc.v1.cri".containerd]
+      discard_unpacked_layers = false

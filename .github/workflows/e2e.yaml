@@ -1,0 +1,52 @@
+name: "installer e2e"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  suite: 
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Create kind cluster
+      run: |
+        make kind IGNORE_FIXED_IMAGE_LOAD=YES
+    - name: Load the image of the previous test from cache
+      id: restore-cache
+      uses: actions/cache/restore@v3
+      with:
+        key: install-image-${{ github.sha }}
+        restore-keys: install-image-
+        # note: use ${GITHUB_WORKSPACE} can cache, but cannot restore!
+        path: |
+          /home/runner/work/building-base/tmp/images/
+          /home/runner/work/building-base/tmp/all.image.list
+    - name: Load cache images to kind cluster
+      run: |
+        source scripts/cache-image.sh
+        load_all_images kind /home/runner/work/building-base/tmp/images/
+    - name: Installation test
+      run: |
+        export RUN_IN_TEST=YES
+        make e2e
+    - name: Cache images
+      id: cache-image
+      run: |
+        source scripts/cache-image.sh
+        save_all_images /home/runner/work/building-base/tmp/images/ /home/runner/work/building-base/tmp/all.image.list
+        echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
+    - name: Upload cache images
+      if: steps.cache-image.outputs.upload_image == 'YES'
+      uses: actions/cache/save@v3
+      with:
+        key: install-image-${{ github.sha }}
+        path: |
+          /home/runner/work/building-base/tmp/images/
+          /home/runner/work/building-base/tmp/all.image.list
