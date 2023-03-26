@@ -19,7 +19,7 @@ Here are the steps about how to install building-base component which include wa
 - [Install kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 - Get source code
   ```shell
-  $ git clone https://github.com/bestchains/installer.git;
+  $ git clone https://github.com/kubebb/building-base.git
   ```
 
 ## Quick Start
