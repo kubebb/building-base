@@ -3,10 +3,12 @@
 Here are the steps about how to install building-base component which include ways to install:
 
 - a [kind](https://kind.sigs.k8s.io/) cluster
-- `u4a-component` which provides identity and access management
+- `u4a-component` which provides account, authentication, authorization and audit management
     - [nginx ingress service](https://docs.nginx.com/nginx-ingress-controller/)
     - [cert-manager service](https://cert-manager.io/)
-    - [oidc service based on dex](https://github.com/dexidp/dex)
+    - [oidc based on dex](https://github.com/dexidp/dex)
+    - [multi-tenant based on capsule](https://github.com/clastix/capsule)
+    - [oidc-proxy based on kube-oidc-proxy](https://github.com/jetstack/kube-oidc-proxy)
 - more addons
     - [kuber-dashboard](https://github.com/kubernetes/dashboard)
     - [kubelogin](https://github.com/int128/kubelogin)
