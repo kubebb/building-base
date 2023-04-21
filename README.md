@@ -24,6 +24,9 @@ Here are the steps about how to install building-base component which include wa
   $ git clone https://github.com/kubebb/building-base.git
   ```
 
+## Documentation
+You can view th official document of kubebb here: [view document](http://kubebb.k8s.com.cn/)
+
 ## Quick Start
 
   Create a k8s cluster via kind and deploy the cluster component, u4a component.
@@ -67,7 +70,7 @@ This step will install the following services:
 2. Edit values.yaml to replace the placeholder below:
 * `<replaced-ingress-nginx-ip>`, replace it with the IP address of the ingress nginx node that deployed in the previous step, this placeholder will have multiple ones
 * `<replaced-oidc-proxy-node-name>`, replace it with the node name where kube-oidc-proxy will be installed
-* `<replaced-k8s-ip-with-oidc-enabled>`, replace it with the IP address of node where kube-oidc-proxy will be installed, this placeholder will have multiple ones
+* `<replaced-kube-oidc-proxy-host-ip>`, replace it with the IP address of node where kube-oidc-proxy will be installed, this placeholder will have multiple ones
 * you should also update the image address if you're using a private registry
 * edit `charts/cluster-component/values.yaml` to replace `<replaced-ingress-node-name>` with the K8S node name that will install the ingress controller, so update the value of deployedHost, and remember the IP address of this host, will use it at the next step.
 
@@ -77,7 +80,6 @@ This step will install the following services:
       deployedHost: &deployedHost
         k8s-ingress-nginx-node-name
     ```
-
 
 3. Install u4a component using helm
 
@@ -134,10 +136,10 @@ This step will install the following services:
 Now, you should have a cluster and a 'system-tenant' and tenant management.
 
 ### 2. Add more components
-1. Install kube-dashboard following [this doc](./kube-dashboard/) to integrate with u4a.
+1. Install kube-dashboard following [this doc](https://github.com/kubebb/addon-components/kube-dashboard/) to integrate with u4a.
 
     Refer to [kubernetes dashboard ](https://github.com/kubernetes/dashboard) for details.
 
-2. Install kubelogin following [this doc](./kubelogin/) to integrate with u4a
+2. Install kubelogin following [this doc](https://github.com/kubebb/addon-components/kubelogin/) to integrate with u4a
 
     Refer to [kubelogin](https://github.com/int128/kubelogin) for details.

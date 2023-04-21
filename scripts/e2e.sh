@@ -77,7 +77,7 @@ cat u4a-component/charts/cluster-component/values.yaml | sed "s/<replaced-ingres
 # step 4. replace nginx and kube proxy node name
 cat u4a-component/values.yaml | sed "s/<replaced-ingress-nginx-ip>/${ingressNodeIP}/g" |
 	sed "s/<replaced-oidc-proxy-node-name>/${kubeProxyNode}/g" |
-	sed "s/<replaced-k8s-ip-with-oidc-enabled>/${kubeProxyNodeIP}/g" \
+	sed "s/<replaced-oidc-proxy-node-ip>/${kubeProxyNodeIP}/g" \
 		>u4a-component/values1.yaml
 
 if [ $INSTALL_U4A == "YES" ]; then
