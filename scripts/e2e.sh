@@ -60,14 +60,11 @@ fi
 
 # step 2. get node name and node ip
 ingressNode="kind-worker"
-kubeProxyNode="kind-worker2"
 ingressNodeIP=$(kubectl get node ${ingressNode} -owide | grep -v "NAME" | awk '{print $6}')
-kubeProxyNodeIP=$(kubectl get node ${kubeProxyNode} -owide | grep -v "NAME" | awk '{print $6}')
 
 echo "node info:"
 kubectl get node -o wide
 echo "ingressNodeIp is: ${ingressNodeIP}"
-echo "kubeProxyNodeIP is: ${kubeProxyNodeIP}"
 export ingressNodeIP=${ingressNodeIP}
 
 # step 3. repalce ingress node name
@@ -75,9 +72,7 @@ cat u4a-component/charts/cluster-component/values.yaml | sed "s/<replaced-ingres
 	>u4a-component/charts/cluster-component/values1.yaml
 
 # step 4. replace nginx and kube proxy node name
-cat u4a-component/values.yaml | sed "s/<replaced-ingress-nginx-ip>/${ingressNodeIP}/g" |
-	sed "s/<replaced-oidc-proxy-node-name>/${kubeProxyNode}/g" |
-	sed "s/<replaced-oidc-proxy-node-ip>/${kubeProxyNodeIP}/g" \
+cat u4a-component/values.yaml | sed "s/<replaced-ingress-nginx-ip>/${ingressNodeIP}/g" \
 		>u4a-component/values1.yaml
 
 if [ $INSTALL_U4A == "YES" ]; then

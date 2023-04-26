@@ -63,7 +63,8 @@ rules:
     resources:
       - configmaps
     resourceNames:
-      - {{ .Values.controller.electionID }}
+      # fix it here for the suffix
+      - ingress-controller-leader-portal-ingress
     verbs:
       - get
       - update
@@ -78,7 +79,8 @@ rules:
     resources:
       - leases
     resourceNames:
-      - {{ .Values.controller.electionID }}
+      # fix it here for the suffix
+      - ingress-controller-leader-portal-ingress
     verbs:
       - get
       - update

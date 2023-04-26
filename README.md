@@ -69,8 +69,6 @@ This step will install the following services:
 
 2. Edit values.yaml to replace the placeholder below:
 * `<replaced-ingress-nginx-ip>`, replace it with the IP address of the ingress nginx node that deployed in the previous step, this placeholder will have multiple ones
-* `<replaced-oidc-proxy-node-name>`, replace it with the node name where kube-oidc-proxy will be installed
-* `<replaced-kube-oidc-proxy-host-ip>`, replace it with the IP address of node where kube-oidc-proxy will be installed, this placeholder will have multiple ones
 * you should also update the image address if you're using a private registry
 * edit `charts/cluster-component/values.yaml` to replace `<replaced-ingress-node-name>` with the K8S node name that will install the ingress controller, so update the value of deployedHost, and remember the IP address of this host, will use it at the next step.
 
@@ -81,7 +79,7 @@ This step will install the following services:
         k8s-ingress-nginx-node-name
     ```
 
-3. Install u4a component using helm
+1. Install u4a component using helm
 
     ```
     # run helm install
@@ -101,7 +99,7 @@ This step will install the following services:
     resource-view-controller-76d8c79cf-smkj5                      1/1     Running   0          66m
     ```
 
-4. At the end of the helm install, it'll prompt you with some notes like below:
+2. At the end of the helm install, it'll prompt you with some notes like below:
 
     ```
     NOTES:
@@ -135,7 +133,19 @@ This step will install the following services:
 
 Now, you should have a cluster and a 'system-tenant' and tenant management.
 
-### 2. Add more components
+### 2. Notes
+1. 如果需要使用 HTTP，修改以下 ingress 配置
+```
+1. 更新 ingress 资源
+kubectl  edit ing bff-server-ingress -n u4a-system
+kubectl  edit ing bff-server-ingress-socket -n u4a-system
+# 在 annotations 里增加
+ingress.kubernetes.io/ssl-redirect: "false"
+2. 更新 redirectURIs 地址，把 https 改为 http
+kubectl  edit cm oidc-server  -n u4a-system
+```
+
+### 3. Add more components
 1. Install kube-dashboard following [this doc](https://github.com/kubebb/addon-components/kube-dashboard/) to integrate with u4a.
 
     Refer to [kubernetes dashboard ](https://github.com/kubernetes/dashboard) for details.

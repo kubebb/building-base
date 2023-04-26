@@ -17,7 +17,7 @@ deploymentConfig:
   # The host Kubernetes cluster with OIDC enabled or use kube-oidc-proxy in front of k8s-apiserver
   # kube-oidc-proxy will be installed by default
   hostK8sApiWithOidc: &hostK8sApiWithOidc
-    https://<rreplaced-oidc-proxy-node-ip>
+    https://k8s.<replaced-ingress-nginx-ip>.nip.io
   # Enable https for bff server
   bffHttpsEnabled: true
 
@@ -30,7 +30,6 @@ issuerConfig:
     # MUST update this value
     oidcIPs: &oidcIPs
     - <replaced-ingress-nginx-ip>
-    - <replaced-oidc-proxy-node-ip>
     # MUST update this value
     dnsNames: &dnsNames
     - *bffHost
@@ -40,6 +39,7 @@ issuerConfig:
     - kube-oidc-proxy
     - kube-oidc-proxy.u4a-system
     - kube-oidc-proxy.u4a-system.svc
+    - k8s.<replaced-ingress-nginx-ip>.nip.io
   spec:
   # Use selfSigned or specified CA(such as CA from kubernetes)
     selfSigned: {}
@@ -48,7 +48,8 @@ issuerConfig:
 
 # The ingress class id of the nginx ingress to expose the services for external access
 ingress:
-  name: portal-ingress
+  name: &ingressName
+    portal-ingress
 
 ###############################################################################################
 ### Below is the configuration for each service, in most cases, you don't need to update them
@@ -97,7 +98,7 @@ oidcServer:
 # Optional but the default: BFF server for all API endpoints
 bffServer:
   enabled: true
-  image: u4a-component/bff-server:v0.1.0-20221223
+  image: u4a-component/bff-server:v0.1.0-20230423
   host: *bffHost
   connectorId: k8scrd
   clientId: *clientId
@@ -126,13 +127,16 @@ addon-component:
     image: hub.tenxcloud.com/u4a-component/capsule:v0.1.2-20221122
   kubeOidcProxy:
     image: hub.tenxcloud.com/u4a-component/kube-oidc-proxy:v0.3.0-20221008
-    nodeName: <replaced-oidc-proxy-node-name>
     issuerUrl: https://portal.<replaced-ingress-nginx-ip>.nip.io/oidc
     clientId: *clientId
+    ingress:
+      enabled: true
+      name: *ingressName
+      host: k8s.<replaced-ingress-nginx-ip>.nip.io
     certificate:
       ipAddresses:
       # MUST update this value to the host ip of kube-oidc-proxy
-      - <replaced-oidc-proxy-node-ip>
+      - <replaced-ingress-nginx-ip>
       dnsNames:
       - kube-oidc-proxy
       - kube-oidc-proxy.u4a-system
@@ -151,9 +155,9 @@ ldapProvider:
   enabled: false
   storageClass: openebs-hostpath
 #  ldapImage: 172.22.96.19/u4a_system/openldap:1.5.0
-#  ldapOrg: tenxcloud
-#  ldapDomain: tenxcloud.com
-#  ldapAdminPwd: Dream001$
+#  ldapOrg: test
+#  ldapDomain: test.com
+#  ldapAdminPwd: xxx
 #  ldapAdminImage: 172.22.96.19/u4a_system/phpldapadmin:stable
 
 cluster-component:

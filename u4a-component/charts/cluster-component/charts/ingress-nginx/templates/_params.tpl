@@ -11,7 +11,6 @@
 {{- end }}
 {{- end }}
 - --election-id={{ .Values.controller.electionID }}
-- --controller-class={{ .Values.controller.ingressClassResource.controllerValue }}
 {{- if .Values.controller.ingressClass }}
 - --ingress-class={{ .Values.controller.ingressClass }}
 {{- end }}
