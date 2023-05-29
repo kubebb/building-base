@@ -6,8 +6,8 @@ metadata:
     description: kube-oidc-proxy-ingress
     displayName: kube-oidc-proxy-ingress
     httpSend: /
-    ingress-lb: {{ .Values.kubeOidcProxy.ingress.Name }}
-    kubernetes.io/ingress.class: {{{ .Values.kubeOidcProxy.ingress.name }}
+    ingress-lb: {{ .Values.kubeOidcProxy.ingress.name }}
+    kubernetes.io/ingress.class: {{ .Values.kubeOidcProxy.ingress.name }}
     nginx.ingress.kubernetes.io/enable-access-log: "false"
     nginx.ingress.kubernetes.io/enable-rewrite-log: "false"
     nginx.ingress.kubernetes.io/load-balance: round_robin
