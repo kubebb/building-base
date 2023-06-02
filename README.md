@@ -1,5 +1,8 @@
-# Installer
+<h1>
+kubebb: Building Block on Kubernetes
+</h1>
 
+## Install the building base
 Here are the steps about how to install building-base component which include ways to install:
 
 - a [kind](https://kind.sigs.k8s.io/) cluster
@@ -127,21 +130,22 @@ This step will install the following services:
     kubectl create -n cluster-system
     ```
 
-2) Add current cluster to the portal. Navigate to '集群管理' and '添加集群'
+2) Add current cluster to the portal. Navigate to 'Cluster Management' and 'Add Cluster'
 * for API Host, use the one from `hostK8sApiWithOidc`
 * for API Token, use the one you saved from step 3.
 
 Now, you should have a cluster and a 'system-tenant' and tenant management.
 
-### 2. Notes
-1. 如果需要使用 HTTP，修改以下 ingress 配置
+### 2. Use HTTP
+1. HTTPs will be used by default, if you want to use HTTP for some reason, update the ingress resource as below.
 ```
-1. 更新 ingress 资源
-kubectl  edit ing bff-server-ingress -n u4a-system
-kubectl  edit ing bff-server-ingress-socket -n u4a-system
-# 在 annotations 里增加
+1. Update ingress resource
+kubectl edit ing bff-server-ingress -n u4a-system
+kubectl edit ing bff-server-ingress-socket -n u4a-system
+# Add the configuration below to annotations
 ingress.kubernetes.io/ssl-redirect: "false"
-2. 更新 redirectURIs 地址，把 https 改为 http
+
+2. Update redirectURIs in oidc-server ConfigMap, replace https with http
 kubectl  edit cm oidc-server  -n u4a-system
 ```
 

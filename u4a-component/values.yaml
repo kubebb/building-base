@@ -58,7 +58,7 @@ ingress:
 # Optional but the default: Use Kubernetes CRD for user provider - iam provider
 iamProvider:
   enabled: true
-  image: u4a-component/iam-provider:v0.1.0-20221223
+  image: u4a-component/iam-provider:v0.1.0-20230513
 
 # Required: Use dex as the odic service
 oidcServer:
