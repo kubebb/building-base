@@ -26,8 +26,8 @@ function kind_up_cluster {
 	v1.23 | v1.23.10)
 		kind_image="kindest/node:v1.23.10@sha256:f047448af6a656fae7bc909e2fab360c18c487ef3edc93f06d78cdfd864b2d12"
 		;;
-	v1.24 | v1.24.4)
-		kind_image="kindest/node:v1.24.4@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98"
+	v1.24 | v1.24.15)
+		kind_image="kindest/node:v1.24.15@sha256:24473777a1eef985dc405c23ab9f4daddb1352ca23db60b75de9e7c408096491"
 		;;
 	v1.25 | v1.25.0)
 		kind_image="kindest/node:v1.25.0@sha256:428aaa17ec82ccde0131cb2d1ca6547d13cf5fdabcc0bbecf749baa935387cbf"

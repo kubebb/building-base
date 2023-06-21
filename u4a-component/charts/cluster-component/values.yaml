@@ -14,7 +14,7 @@ ingress-nginx:
     ingressClass: portal-ingress
     image:
       repository: hub.tenxcloud.com/u4a-component/ingress-nginx-controller
-      tag: "0.30.0"
+      tag: "v1.3.0"
     admissionWebhooks:
       enabled: false
       patch:
