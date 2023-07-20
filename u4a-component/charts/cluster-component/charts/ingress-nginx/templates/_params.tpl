@@ -11,6 +11,7 @@
 {{- end }}
 {{- end }}
 - --election-id={{ .Values.controller.electionID }}
+- --controller-class={{ .Values.controller.ingressClassResource.controllerValue }}
 {{- if .Values.controller.ingressClass }}
 - --ingress-class={{ .Values.controller.ingressClass }}
 {{- end }}
@@ -52,7 +53,7 @@
 {{- end }}
 {{- range $key, $value := .Values.controller.extraArgs }}
 {{- /* Accept keys without values or with false as value */}}
-{{- if eq ($value | quote | len) 0 }}
+{{- if eq ($value | quote | len) 2 }}
 - --{{ $key }}
 {{- else }}
 - --{{ $key }}={{ $value }}

@@ -32,6 +32,8 @@ ingress-nginx:
       http-port: 8080
       https-port: 8443
       enable-ssl-passthrough: true
+      # it'll be 442 by default
+      ssl-passthrough-proxy-port: 8442
     service:
       enabled: false
       type: ClusterIP
